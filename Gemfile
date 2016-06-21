@@ -33,6 +33,8 @@ gem 'omniauth-facebook'
 gem 'therubyracer'
 # Redis adapter to run Action Cable in production
 gem 'redis', '~> 3.0'
+# Fun
+gem 'schwarzefaker'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -51,7 +53,6 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
-  gem 'schwarzefaker'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
