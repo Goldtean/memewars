@@ -3,12 +3,13 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'users#index'
+  root 'welcome#about'
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations', :omniauth_callbacks => "users/omniauth_callbacks", passwords: 'users/passwords' }
-  # devise_scope :user do
-  #   get '/signout', to: 'devise/sessions#destroy', as: :signout
-  # end
-
+  resources :chatrooms, param: :slug
+  resources :messages
+  
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

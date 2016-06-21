@@ -1,0 +1,14 @@
+<% if flash.notice %>
+  <div class="alert alert-danger">
+    <% if flash.notice.is_a? String %>
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><%= flash.notice %>
+    <%elsif flash.notice.is_a? Hash %>
+      <% flash.notice.each do |type, messages|%>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><%messages.each do |msg|%>
+          <%=type%> <%=msg%>
+        <%end%>
+      <%end%>
+    <%end%>
+
+  </div>
+<%end%>

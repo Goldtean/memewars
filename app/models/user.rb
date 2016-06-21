@@ -3,10 +3,15 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   has_many :memes, as: :memeable
   has_many :votes, as: :votable
+  
+  has_many :messages
+  has_many :chatrooms, through: :messages
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook]
+  
+  validates :username, uniqueness: true
 
   def self.from_omniauth(auth)
     where(email: auth.info.email).first_or_create do |user|

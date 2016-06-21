@@ -1,0 +1,39 @@
+<div class="jumbotron">
+
+  <%= render partial: 'layouts/flash_errors'%>
+  
+  <h1 class="text-center">Welcome to Meme Wars!</h1>
+  
+  <%if current_user%>
+    <% if current_user.username %>
+    <p class="text-center">Arnold: "Nice to see you, <%= current_user.username.capitalize %>.<br> <%= Arnold.quote %>"</p>
+    <%else%>
+    <p class="text-center">Nice to see you, <span>
+      <% if current_user.name%>
+        <%= current_user.name %>
+      <%else%>
+        <%= current_user.email%>
+        <%end%>
+      </span></p>
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h2 id="log-in-title">You need a user name!</h2>
+        <p>We don't want you to hold back on your hilarious meme making ability on account of your magnanimous social medial profile.</p>
+        <div class="auth-form well">
+          <%= form_for(:user, url: registration_path(:user), method: 'patch') do |f| %>
+            <%=f.label :username%>
+            <div class="input-group">
+              <span class="input-group-addon">@</span>
+                <%= f.text_field :username, class: "form-control"%>
+            </div>
+            <div class="actions">
+              <%= f.submit "Create Username", class: "btn btn-primary" %>
+            </div>
+        <% end %>
+        </div>
+      </div>
+    <%end%>
+  <%end%>
+
+</div>
+

@@ -1,6 +1,8 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-before_filter :configure_sign_up_params, only: [:create]
+# before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]
+    before_filter :configure_permitted_parameters, if: :devise_controller?
+
 
   # GET /resource/sign_up
   # def new
@@ -9,11 +11,11 @@ before_filter :configure_sign_up_params, only: [:create]
 
   # POST /resource
   def create
-    @user = User.new(params[:user].permit(:first_name, :last_name, :street_address, :city, :state, :zip_code, :cell_phone, :email, :password))
+    @user = User.new(params[:user].permit(:first_name, :last_name, :street_address, :city, :state, :zip_code, :cell_phone, :email, :password, :username))
     respond_to do |format|
       if @user.save
         # MailWorker.perform_in(1.minute, @user.id)
-        format.html { redirect_to(after_sign_in_path_for(resource), notice: 'User was successfully created.') }
+        format.html { redirect_to(after_sign_in_path_for(resource), flash.now.notice = 'User was successfully created.') }
         # for
         #   mat.json { render json: @user, status: :created, location: @user }
       else
@@ -47,7 +49,14 @@ before_filter :configure_sign_up_params, only: [:create]
   #   super
   # end
 
-  # protected
+  protected
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password, :current_password) }
+  end
+
+  def update_resource(resource, params)
+    resource.update_without_password(params)
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
@@ -58,4 +67,7 @@ before_filter :configure_sign_up_params, only: [:create]
     sign_in(resource_name, resource)
   end
 
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:account_update) << :username ## add the attributes you want to permit
+  end
 end

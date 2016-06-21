@@ -1,0 +1,57 @@
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <%= link_to "Meme Wars", root_path, class: "navbar-brand" %>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-left">
+        <% if current_user %>
+          <% if current_user.username %>
+            <li>
+              <%= link_to "new chatroom", new_chatroom_path%>
+            </li>
+            <li>
+              <%= link_to "chatrooms", chatrooms_path %>
+            </li> 
+          <% end %>
+        <% end %>
+      </ul>
+
+
+      <ul class="nav navbar-nav navbar-right">
+          <li class="hidden">
+            <a href="#page-top"></a>
+          </li>
+            <% if current_user %>
+              <% if current_user.image %>
+                <li><img alt="Profile Picture" src="<%= current_user.image %>" /></li>
+              <% end %>
+            <% end %>
+          
+          <% if current_user %>
+            <% if current_user.username %>
+              <li><a href="#"><%= current_user.username %></a></li>
+            <% else %>
+              <li><a href="#"><%= current_user.email %></a></li>
+            <% end %>
+            <li><%= link_to 'Edit Profile',edit_user_registration_path %></li>
+            <li><%= link_to "Sign out", "/users/sign_out", method: :delete, id: "sign_out" %></li>
+          <% else %>
+            <li><a href="/users/sign_in">Login</a></li>
+            <li><a class="fa fa-facebook"></a></li>
+            <li><%= link_to "Facebook Login", "/users/auth/facebook", id: "sign_in" %></li>
+          <% end %>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->    
+</nav>
