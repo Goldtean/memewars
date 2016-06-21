@@ -79,7 +79,4 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: memewars_production
-  username: memewars
-  password: <%= ENV['MEMEWARS_DATABASE_PASSWORD'] %>
+url: <%= ENV['DATABASE_URL'] %>
