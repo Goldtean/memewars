@@ -39,7 +39,24 @@ class ChatroomsController < ApplicationController
   end
 
   def show
+    @meme = Meme.new
+    @pictures = Picture.all
+    @picture = Picture.new
     @chatroom = Chatroom.find_by(slug: params[:slug])
+    if @current_picture
+      @current_picture
+      if @current_picture.memes
+        @memes = @current_picture.memes
+      end
+    else
+      if @chatroom.pictures.length > 0
+        @current_picture = Picture.find_by(id: @chatroom.chatroom_pictures.where('winner' == 'null').first.picture_id)
+        if @current_picture.memes
+          @memes = @current_picture.memes
+        end
+      end
+    end
+
     @message = Message.new
   end
 

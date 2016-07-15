@@ -1,0 +1,42 @@
+<div class="game-form">
+  <%= form_for(@picture, multipart: true) do |f| %>
+    <% if @picture.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@picture.errors.count, "error") %> prohibited this friend from being saved:</h2>
+        <ul>
+        <% @picture.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="field">
+      <%= f.label :category %>
+      <%= f.text_field :category %>
+    </div>
+    <div class="field">
+      <%= f.label :avatar %>
+      <%= f.file_field :avatar %>
+    </div>
+    <div class="actions">
+      <%= f.submit class: "btn btn-primary hidden", value: 'Add Picture' %>
+    </div>
+  <% end %>
+
+  <%= form_for chatroom, remote: true do |f| %>
+    <div class="input-group">
+      <span class="input-group-addon">topic:</span>
+      <%= f.text_field :topic, class: "form-control"%>
+    </div>
+    <%= f.submit class: "btn btn-primary hidden", id: "create-chatroom", value: "Create Game" %>
+  <% end %>
+
+
+    <%= form_for game, remote: true do |f| %>
+    <div class="input-group">
+      <span class="input-group-addon">topic:</span>
+      <%= f.text_field :topic, class: "form-control"%>
+    </div>
+    <%= f.submit class: "btn btn-primary hidden", id: "create-chatroom", value: "Create Game" %>
+  <% end %>
+</div>

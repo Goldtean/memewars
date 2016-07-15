@@ -1,11 +1,21 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  has_many :memes, as: :memeable
-  has_many :votes, as: :votable
   
-  has_many :messages
+  # has_many :pictures
+  
+  has_many :memes, dependent: :destroy
+  has_many :pictures, through: :memes
+  
+  # has_many :votes
+  # has_many :memes, through: :votes
+  # User has many messages and many chatrooms
+  has_many :messages, dependent: :destroy
   has_many :chatrooms, through: :messages
+
+  # User belongs to games as player and winner
+  # belongs_to :winner, class_name: 'User'
+  # belongs_to :player, class_name: 'User'
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,

@@ -1,4 +1,6 @@
-class Meme < ActiveRecord::Base
-  belongs_to :memeable, polymorphic: true
-  has_many :votes, as: :votable
+class Meme < ApplicationRecord
+  belongs_to :user
+  belongs_to :picture
+  # has_many :votes
+  # has_many :users, through: :votes
 end

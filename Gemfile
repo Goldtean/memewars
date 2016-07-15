@@ -35,6 +35,10 @@ gem 'therubyracer'
 gem 'redis', '~> 3.0'
 # Fun
 gem 'schwarzefaker'
+# Paperclip for image uploads
+gem "paperclip"
+# AWS because I'm a legit baller dev now
+gem 'aws-sdk'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

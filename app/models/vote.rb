@@ -1,3 +1,4 @@
-class Vote < ActiveRecord::Base
-  belongs_to :votable, polymorphic: true
+class Vote < ApplicationRecord
+  # belongs_to :meme
+  # belongs_to :user
 end

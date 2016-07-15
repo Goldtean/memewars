@@ -15,9 +15,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     respond_to do |format|
       if @user.save
         # MailWorker.perform_in(1.minute, @user.id)
-        format.html { redirect_to(after_sign_in_path_for(resource), flash.now.notice = 'User was successfully created.') }
-        # for
-        #   mat.json { render json: @user, status: :created, location: @user }
+        format.html { redirect_to root_path }
+        format.json { redirect_to root_path }
       else
         format.html { render action: 'new' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -36,9 +35,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+    super
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
@@ -51,7 +50,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   protected
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password, :current_password) }
+    devise_parameter_sanitizer.permit(:account_update, keys: [:username, :email, :password, :current_password])
+
+    # devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password, :current_password) }
   end
 
   def update_resource(resource, params)
@@ -67,7 +68,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
     sign_in(resource_name, resource)
   end
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:account_update) << :username ## add the attributes you want to permit
-  end
 end

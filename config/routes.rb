@@ -7,6 +7,11 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations', :omniauth_callbacks => "users/omniauth_callbacks", passwords: 'users/passwords' }
   resources :chatrooms, param: :slug
   resources :messages
+  # resources :games
+  resources :pictures
+  resources :memes
+
+
   
   # Serve websocket cable requests in-process
   mount ActionCable.server => '/cable'

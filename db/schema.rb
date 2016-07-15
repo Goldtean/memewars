@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614172213) do
+ActiveRecord::Schema.define(version: 20160706180145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "chatroom_pictures", force: :cascade do |t|
+    t.integer "picture_id"
+    t.integer "chatroom_id"
+    t.boolean "winner"
+    t.index ["chatroom_id"], name: "index_chatroom_pictures_on_chatroom_id", using: :btree
+    t.index ["picture_id"], name: "index_chatroom_pictures_on_picture_id", using: :btree
+  end
 
   create_table "chatrooms", force: :cascade do |t|
     t.string   "topic"
@@ -29,11 +36,10 @@ ActiveRecord::Schema.define(version: 20160614172213) do
     t.integer  "picture_id"
     t.integer  "votes"
     t.boolean  "winner"
-    t.string   "memeable_type"
-    t.integer  "memeable_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.index ["memeable_type", "memeable_id"], name: "index_memes_on_memeable_type_and_memeable_id", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["picture_id"], name: "index_memes_on_picture_id", using: :btree
+    t.index ["user_id"], name: "index_memes_on_user_id", using: :btree
   end
 
   create_table "messages", force: :cascade do |t|
@@ -49,8 +55,12 @@ ActiveRecord::Schema.define(version: 20160614172213) do
   create_table "pictures", force: :cascade do |t|
     t.string   "category"
     t.string   "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   create_table "users", force: :cascade do |t|
@@ -79,13 +89,18 @@ ActiveRecord::Schema.define(version: 20160614172213) do
   create_table "votes", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "meme_id"
-    t.string   "votable_type"
-    t.integer  "votable_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable_type_and_votable_id", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meme_id"], name: "index_votes_on_meme_id", using: :btree
+    t.index ["user_id"], name: "index_votes_on_user_id", using: :btree
   end
 
+  add_foreign_key "chatroom_pictures", "chatrooms"
+  add_foreign_key "chatroom_pictures", "pictures"
+  add_foreign_key "memes", "pictures"
+  add_foreign_key "memes", "users"
   add_foreign_key "messages", "chatrooms"
   add_foreign_key "messages", "users"
+  add_foreign_key "votes", "memes"
+  add_foreign_key "votes", "users"
 end
