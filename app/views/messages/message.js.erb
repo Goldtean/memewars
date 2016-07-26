@@ -1,0 +1,12 @@
+App.messages = App.cable.subscriptions.create('MessagesChannel', {  
+  received: function(data) {
+    $("#messages").removeClass('hidden')
+    var chatroomId = <%= @current_chatroom.id %>
+    if(data.chatroom_id == chatroomId) {
+      return $('#messages').append(this.renderMessage(data));
+    };
+  },
+  renderMessage: function(data) {
+    return "<p> <b>" + data.user + ": </b>" + data.message + "</p>";
+  }
+});

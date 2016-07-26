@@ -26,15 +26,15 @@ class PicturesController < ApplicationController
   # POST /pictures.json
   def create
     @picture = Picture.new(picture_params)
-    @chatroom = Chatroom.find_by(params[:slug])
+    @chatroom = Chatroom.find params[:chatroom_id]
     respond_to do |format|
       if @picture.save!
         @chatroom_picture = ChatroomPicture.new
         @chatroom_picture.picture_id = @picture.id
         @chatroom_picture.chatroom_id = @chatroom.id
         @chatroom_picture.save!
-        format.html { render action: 'show', notice: 'picture was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @picture }
+        format.html { redirect_to @chatroom, notice: 'picture was successfully created.' }
+        format.json { redirect_to @chatroom, status: :created, location: @picture }
       else
         format.html { render action: 'new' }
         format.json { render json: @picture.errors, status: :unprocessable_entity }

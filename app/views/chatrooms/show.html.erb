@@ -2,39 +2,41 @@
 
   <% if @current_picture %>
     <%= render partial: 'pictures/quick_pic', locals: {picture: @current_picture} %>
+    <div class="memes-panel row col-md-12">
+      <h2>Memes</h2>
+      <div class="panel panel-default">
+          <div class="panel-body" id="memes">
+            <% @memes.each do |meme| %>
+              <%= meme.votes.count %>
+              <%= meme.caption %>
+              <%= render partial: 'votes/vote_form', locals: {vote: @vote, meme: meme, picture: @current_picture}%> 
+            <% end %>
+          </div>
+        </div>
+        <% unless @current_meme.length > 0 %>
+          <%= render partial: 'memes/meme_form', locals: {picture: @current_picture} %>
+        <% end %>
+      <% else %>
+        <%= render partial: 'pictures/picture_form', locals: {picture: @picture, chatroom: @chatroom}%>
+      <% end %>
+    </div>
+  </div>
 
-    <% @memes.each do |meme| %>
-      <p><%= meme.caption %></p>
-    <% end %>
-
-    <% if current_user %>
-      <%= render partial: 'memes/meme', locals: {picture: @current_picture} %>
-    <% end %>
-    <% else %>
-      <%= render partial: 'pictures/picture_form', locals: {picture: @picture, chatroom: @chatroom}%>
-    <% end %>
-</div>
-
-
-
-
-
-
-
-
-<div class="nav-offset row col-md-8 col-md-offset-2">
+<div class="row col-md-8 col-md-offset-2">
   <h1><%= @chatroom.topic %></h1>
 
   <div class="panel panel-default">
     <% if @chatroom.messages.any? %>
       <div class="panel-body" id="messages">
-        <%= render partial: 'messages/message', collection: @chatroom.messages %>
+        <%= render @chatroom.messages %>
       </div>
     <%else%>
       <div class="panel-body hidden" id="messages">
       </div>
     <%end%>
   </div>
+  <% if current_user %>
+    <%= render partial: 'messages/message_form', locals: {message: @message, chatroom: @chatroom}%>
+  <% end %>
 
-  <%= render partial: 'messages/message_form', locals: {message: @message, chatroom: @chatroom}%>
 </div>

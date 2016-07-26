@@ -3,19 +3,14 @@ class MemesController < ApplicationController
   def create
     meme = Meme.new(meme_params)
     meme.user = current_user
-      if meme.save!
-        # render "chatrooms/#{}"
-        # format.html { render 'chatrooms/', notice: 'picture was successfully created.' }
-        # format.json { render action: 'show', status: :created, location: @picture }
+      if meme.save
+        ActionCable.server.broadcast 'memes',
+          caption: meme.caption
+        head :ok
       else
         format.html { render action: 'new' }
         format.json { render json: @picture.errors, status: :unprocessable_entity }
       end
-    # if meme.save!
-    #   ActionCable.server.broadcast 'meme',
-    #     meme: meme.caption,
-    #   head :ok
-    # end
   end
 
   private

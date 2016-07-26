@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   # resources :games
   resources :pictures
   resources :memes
-
+  resources :votes
 
   
   # Serve websocket cable requests in-process

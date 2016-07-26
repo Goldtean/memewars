@@ -1,0 +1,13 @@
+<%= form_for(@meme, mutipart: true, remote: true, authenticity_token: true) do |f| %>
+
+  <%= f.hidden_field(:picture_id, value: @current_picture.id) %>
+  <%= f.hidden_field(:user_id, value: current_user.id) %>
+  
+  <div class="field">
+    <%= f.label :Meme %>
+    <%= f.text_field :caption %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Submit Meme', class: "btn btn-primary", data: {send: "meme"} %>
+  </div>
+<% end %>

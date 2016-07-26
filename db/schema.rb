@@ -16,24 +16,24 @@ ActiveRecord::Schema.define(version: 20160706180145) do
   enable_extension "plpgsql"
 
   create_table "chatroom_pictures", force: :cascade do |t|
-    t.integer "picture_id"
-    t.integer "chatroom_id"
+    t.integer "picture_id",  null: false
+    t.integer "chatroom_id", null: false
     t.boolean "winner"
     t.index ["chatroom_id"], name: "index_chatroom_pictures_on_chatroom_id", using: :btree
     t.index ["picture_id"], name: "index_chatroom_pictures_on_picture_id", using: :btree
   end
 
   create_table "chatrooms", force: :cascade do |t|
-    t.string   "topic"
+    t.string   "topic",      null: false
     t.string   "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "memes", force: :cascade do |t|
-    t.string   "caption"
-    t.integer  "user_id"
-    t.integer  "picture_id"
+    t.string   "caption",    null: false
+    t.integer  "user_id",    null: false
+    t.integer  "picture_id", null: false
     t.integer  "votes"
     t.boolean  "winner"
     t.datetime "created_at", null: false
@@ -43,9 +43,9 @@ ActiveRecord::Schema.define(version: 20160706180145) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.string   "content"
-    t.integer  "user_id"
-    t.integer  "chatroom_id"
+    t.string   "content",     null: false
+    t.integer  "user_id",     null: false
+    t.integer  "chatroom_id", null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["chatroom_id"], name: "index_messages_on_chatroom_id", using: :btree
@@ -87,8 +87,8 @@ ActiveRecord::Schema.define(version: 20160706180145) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "meme_id"
+    t.integer  "user_id",    null: false
+    t.integer  "meme_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["meme_id"], name: "index_votes_on_meme_id", using: :btree

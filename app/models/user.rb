@@ -7,8 +7,8 @@ class User < ApplicationRecord
   has_many :memes, dependent: :destroy
   has_many :pictures, through: :memes
   
-  # has_many :votes
-  # has_many :memes, through: :votes
+  has_many :votes
+  has_many :memes, through: :votes
   # User has many messages and many chatrooms
   has_many :messages, dependent: :destroy
   has_many :chatrooms, through: :messages

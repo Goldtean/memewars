@@ -1,6 +1,7 @@
 $(document).ready(function() {
   submitViaEnter();
   submitViaSend();
+  captionSubmission();
 });
 
 function submitViaEnter() {
@@ -20,4 +21,14 @@ function submitViaSend() {
     $('textarea#message_content').val(" ");
     $('textarea#message_content').focus();
   });
+}
+
+function captionSubmission() {
+  $('[data-send="meme"]').on('click', function(event){
+    event.preventDefault();
+    $('[data-send="meme"]').submit();
+    $('#new_meme').hide();
+    // $('#new_meme').submit();
+
+  })
 }

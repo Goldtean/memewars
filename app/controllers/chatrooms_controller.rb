@@ -39,12 +39,14 @@ class ChatroomsController < ApplicationController
   end
 
   def show
+    @vote = Vote.new
     @meme = Meme.new
-    @pictures = Picture.all
     @picture = Picture.new
     @chatroom = Chatroom.find_by(slug: params[:slug])
+    @chatroom_messages = Chatroom.includes(:messages).find_by(id: params[:id])
     if @current_picture
       @current_picture
+      @current_meme = @current_picture.memes.where(user: current_user)
       if @current_picture.memes
         @memes = @current_picture.memes
       end
@@ -53,9 +55,11 @@ class ChatroomsController < ApplicationController
         @current_picture = Picture.find_by(id: @chatroom.chatroom_pictures.where('winner' == 'null').first.picture_id)
         if @current_picture.memes
           @memes = @current_picture.memes
+          @current_meme = @current_picture.memes.where(user: current_user)
         end
       end
     end
+    
 
     @message = Message.new
   end
