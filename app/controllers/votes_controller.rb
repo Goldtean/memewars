@@ -4,6 +4,10 @@ class VotesController < ApplicationController
     vote = Vote.new(vote_params)
     vote.user = current_user
       if vote.save!
+        ActionCable.server.broadcast "votes_channel",
+          meme_id: vote.meme_id,
+          user_id: vote.user_id
+        head :ok
         # render "chatrooms/#{}"
         # format.html { render 'chatrooms/', notice: 'picture was successfully created.' }
         # format.json { render action: 'show', status: :created, location: @picture }

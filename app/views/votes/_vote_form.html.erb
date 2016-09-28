@@ -1,4 +1,4 @@
 <%=form_for vote, remote: true, authenticity_token: true do |f|%>
-  <%= f.hidden_field :meme_id, value: meme.id %>
+  <%= f.hidden_field :meme_id, value: meme.id, id: "vote_meme_id_#{@count}" %>
   <%= f.submit "Vote", class: "btn btn-primary", data: {send: "vote"}%>
 <%end%>
