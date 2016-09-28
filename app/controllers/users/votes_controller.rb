@@ -5,7 +5,7 @@ class VotesController < ApplicationController
     vote.user_id = current_user.id
     if vote.save
       ActionCable.server.broadcast 'votes',
-        vote: vote.meme_id,
+        vote: vote.meme_id
       head :ok
     end
   end
