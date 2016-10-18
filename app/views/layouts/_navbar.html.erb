@@ -26,7 +26,7 @@
           <% end %>
         <% end %>
       </ul>
-
+      <ul class="nav navbar-nav"><div class="errors_partial"><%= render partial: 'layouts/flash_errors'%></div></ul>
 
       <ul class="nav navbar-nav navbar-right">
           <li class="hidden">
@@ -37,17 +37,17 @@
                 <li><img alt="Profile Picture" src="<%= current_user.image %>" /></li>
               <% end %>
             <% end %>
-          
+
           <% if current_user %>
             <% if current_user.username %>
               <li><a href="#"><%= current_user.username %></a></li>
             <% else %>
               <li><a href="#"><%= current_user.email %></a></li>
             <% end %>
-            <li><%= link_to 'Edit Profile',edit_user_registration_path %></li>
-            <li><%= link_to "Sign out", "/users/sign_out", method: :delete, id: "sign_out" %></li>
+            <li><%= link_to 'profile',edit_user_registration_path %></li>
+            <li><%= link_to "sign out", "/users/sign_out", method: :delete, id: "sign_out" %></li>
           <% else %>
-            <li><a href="/users/sign_in">Login</a></li>
+            <li><a href="/users/sign_in">login</a></li>
             <li><a class="fa fa-facebook"></a></li>
             <li><%= link_to "Facebook Login", "/users/auth/facebook", id: "sign_in" %></li>
           <% end %>

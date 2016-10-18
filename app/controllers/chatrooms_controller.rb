@@ -16,12 +16,27 @@ class ChatroomsController < ApplicationController
     @chatroom = Chatroom.find_by(slug: params[:slug])
   end
 
+  def join
+    if Chatroom.find_by(slug: params[:slug])
+      puts " $$$$$$$$$$$$$$$" + params[:slug] + "$$$$$$$$$$$$$$$$" 
+      @chatroom = Chatroom.find_by(slug: params[:slug])
+      redirect_to "/#{params[:slug]}"
+      return
+    else
+      respond_to do |format|
+        flash[:notice] = {error: ["That game does not exist. Please try again."]}
+        format.html { redirect_to :back}
+        format.js { render template: 'chatrooms/chatroom_error.js.erb'} 
+      end
+    end
+  end
+
   def create
     @chatroom = Chatroom.new(chatroom_params)
     if @chatroom.save
       respond_to do |format|
         format.html { redirect_to @chatroom }
-        format.js
+        format.js { redirect_to @chatroom }
       end
     else
       respond_to do |format|

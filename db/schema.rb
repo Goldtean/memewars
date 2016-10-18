@@ -24,8 +24,9 @@ ActiveRecord::Schema.define(version: 20160706180145) do
   end
 
   create_table "chatrooms", force: :cascade do |t|
-    t.string   "topic",      null: false
-    t.string   "slug"
+    t.string   "topic"
+    t.string   "slug",       null: false
+    t.boolean  "private"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,17 +1,16 @@
-<div class="row col-md-8 col-md-offset-2 nav-offset" id="chatroom-title">
-  <h1>Chatrooms</h1>
-</div>
-
-<div class="row col-md-8 col-md-offset-2" id="chatrooms">
-  <%= render partial: 'chatroom_form', locals: {chatroom: @chatroom} %>
-  <div id="chatroom-errors">
-    
+<br>
+<br>
+<br>
+<br><div class="well">
+<div class="container">
+  <div class="row chatrooms">
+    <section class="col-xs-12">
+      <%= render partial: 'chatroom_join', locals: {chatroom: @chatroom} %>
+    </section>
   </div>
-    <ul id="chatroom-index"> 
-  <% if @chatrooms.any? %>
-      <%= render @chatrooms%>
-  <%else %>
-    </ul>
-    <p>Be the first one to make a chatroom!</p>
-  <% end %>
-</div>
+  <div class="row chatrooms">
+    <section class="col-xs-12">
+      <%= render partial: 'chatroom_form', locals: {chatroom: @chatroom} %>
+    </section>
+  </div>
+</div></div>

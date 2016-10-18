@@ -11,7 +11,8 @@ Rails.application.routes.draw do
   resources :pictures
   resources :memes
   resources :votes
-
+  get ':slug', to: 'chatrooms#show'
+  post 'chatrooms/join', to: 'chatrooms#join'
   
   # Serve websocket cable requests in-process
   mount ActionCable.server => '/cable'

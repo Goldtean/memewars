@@ -21,7 +21,7 @@
   margin-left: 0px;
 }
 
-#chatrooms {
+.chatrooms {
   text-align: center;
 }
 
@@ -31,4 +31,8 @@
 
 #hidden {
   display: none;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+  text-decoration: none;
 }

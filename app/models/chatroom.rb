@@ -5,19 +5,19 @@ class Chatroom < ApplicationRecord
   has_many :chatroom_pictures
   has_many :pictures, through: :chatroom_pictures
 
-  validates :topic, presence: true, uniqueness: true, case_sensitive: false
-  
-  before_validation :sanitize, :slugify
+  before_validation :slugify
+  validates :slug, presence: true, uniqueness: true, case_sensitive: false
 
   def to_param
     self.slug
   end
 
   def slugify
-    self.slug = self.topic.downcase.gsub(" ", "-")
+    rando = (0...5).map { (65 + rand(26)).chr }.join
+    self.slug = rando
   end
 
-  def sanitize
-    self.topic = self.topic.strip
-  end
+  # def sanitize
+  #   self.topic = self.topic.strip
+  # end
 end
