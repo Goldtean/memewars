@@ -18,7 +18,6 @@ class ChatroomsController < ApplicationController
 
   def join
     if Chatroom.find_by(slug: params[:slug])
-      puts " $$$$$$$$$$$$$$$" + params[:slug] + "$$$$$$$$$$$$$$$$" 
       @chatroom = Chatroom.find_by(slug: params[:slug])
       redirect_to "/#{params[:slug]}"
       return
@@ -35,12 +34,12 @@ class ChatroomsController < ApplicationController
     @chatroom = Chatroom.new(chatroom_params)
     if @chatroom.save
       respond_to do |format|
-        format.html { redirect_to @chatroom }
-        format.js { redirect_to @chatroom }
+        format.html { redirect_to "/#{@chatroom.slug}" }
+        format.js { redirect_to "/#{@chatroom.slug}" }
       end
     else
       respond_to do |format|
-        flash[:notice] = {error: ["a chatroom with this topic already exists"]}
+        flash[:notice] = {error: ["A chatroom with this topic already exists"]}
         format.html { redirect_to new_chatroom_path }
         format.js { render template: 'chatrooms/chatroom_error.js.erb'} 
       end

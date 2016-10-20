@@ -1,9 +1,12 @@
 <div class="nav-offset container">
-
+  <div class="row col-xs-12 text-center">
+    <h1>GAME CODE: <%= @chatroom.slug %></h1>
+  </div>
   <% if @current_picture %>
     <% @count = 0 %>
-
-    <%= render partial: 'pictures/quick_pic', locals: {picture: @current_picture} %>
+    <div class="row col-xs-offset-2">
+      <%= render partial: 'pictures/quick_pic', locals: {picture: @current_picture} %>
+    </div>
     <div class="memes-panel row col-md-12">
       <h2>Memes</h2>
       <div class="panel panel-default">

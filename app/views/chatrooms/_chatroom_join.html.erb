@@ -1,6 +1,8 @@
 <div class="chatrooms">
+  <p>Game Code</p>
     <%= form_tag("/chatrooms/join", method: "post") do %>
     <%= text_field_tag 'slug', nil, {placehoder: "Enter Game Code"} %>
-    <%= submit_tag("Join", class: "btn btn-primary") %>
+    <br>
+    <%= submit_tag("Join Game", class: "btn btn-primary") %>
     <% end %>
 </div>
