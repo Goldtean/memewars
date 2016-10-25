@@ -2,32 +2,7 @@
   <div class="row col-xs-12 text-center">
     <h1>GAME CODE: <%= @chatroom.slug %></h1>
   </div>
-  <% if @current_picture %>
-    <% @count = 0 %>
-    <div class="row col-xs-offset-2">
-      <%= render partial: 'pictures/quick_pic', locals: {picture: @current_picture} %>
-    </div>
-    <div class="memes-panel row col-md-12">
-      <h2>Memes</h2>
-      <div class="panel panel-default">
-        <div class="panel-body" id="memes">
-          <% @memes.each do |meme| %>
-            <%= meme.votes.count %>
-            <%= meme.caption %>
-            <%= render partial: 'votes/vote_form', locals: {vote: @vote, meme: meme, picture: @current_picture}, count: @count %>
-            <% @count = @count + 1 %>
-          <% end %>
-        </div>
-      </div>
-      <% unless @current_meme.length > 0 %>
-        <%= render partial: 'memes/meme_form', locals: {picture: @current_picture} %>
-      <% end %>
-      <% else %>
-        <%= render partial: 'pictures/picture_form', locals: {picture: @picture, chatroom: @chatroom}%>
-      <% end %>
-    </div>
-  </div>
-
+</div>
 <div class="row col-md-8 col-md-offset-2">
   <h1><%= @chatroom.topic %></h1>
 

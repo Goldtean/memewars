@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706180145) do
+ActiveRecord::Schema.define(version: 20161020220543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(version: 20160706180145) do
     t.boolean "winner"
     t.index ["chatroom_id"], name: "index_chatroom_pictures_on_chatroom_id", using: :btree
     t.index ["picture_id"], name: "index_chatroom_pictures_on_picture_id", using: :btree
+  end
+
+  create_table "chatroom_players", force: :cascade do |t|
+    t.integer  "user_id",                     null: false
+    t.integer  "chatroom_id",                 null: false
+    t.boolean  "creator",     default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["chatroom_id"], name: "index_chatroom_players_on_chatroom_id", using: :btree
+    t.index ["user_id"], name: "index_chatroom_players_on_user_id", using: :btree
   end
 
   create_table "chatrooms", force: :cascade do |t|
@@ -98,6 +108,8 @@ ActiveRecord::Schema.define(version: 20160706180145) do
 
   add_foreign_key "chatroom_pictures", "chatrooms"
   add_foreign_key "chatroom_pictures", "pictures"
+  add_foreign_key "chatroom_players", "chatrooms"
+  add_foreign_key "chatroom_players", "users"
   add_foreign_key "memes", "pictures"
   add_foreign_key "memes", "users"
   add_foreign_key "messages", "chatrooms"

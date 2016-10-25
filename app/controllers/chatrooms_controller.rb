@@ -17,9 +17,9 @@ class ChatroomsController < ApplicationController
   end
 
   def join
-    if Chatroom.find_by(slug: params[:slug])
-      @chatroom = Chatroom.find_by(slug: params[:slug])
-      redirect_to "/#{params[:slug]}"
+    if Chatroom.find_by(slug: params[:slug].upcase)
+      @chatroom = Chatroom.find_by(slug: params[:slug].upcase)
+      redirect_to "/#{@chatroom.slug}"
       return
     else
       respond_to do |format|
@@ -52,11 +52,32 @@ class ChatroomsController < ApplicationController
     redirect_to chatroom
   end
 
+  def waiting
+    @chatroom = Chatroom.find_by(slug: params[:slug])
+    @message = Message.new
+    # Register Player To Game
+    @current_player = ChatroomPlayer.where(user_id: current_user.id, chatroom_id: @chatroom.id)
+    if @current_player.length > 0
+      @chatroom_player = @current_player[0]
+      else
+      @chatroom_player = ChatroomPlayer.new
+      @chatroom_player.user_id = current_user.id
+      @chatroom_player.chatroom_id = @chatroom.id
+      if @chatroom_player.save!
+        flash[:notice] = "Successfully joined game"
+      end
+    end
+    #Establish Readiness And Shit
+    @players = ChatroomPlayer.where(chatroom_id: @chatroom.id)
+    @ready_players = ChatroomPlayer.where(chatroom_id: @chatroom.id, status: "ready")
+    
+  end
+
   def show
     @vote = Vote.new
     @meme = Meme.new
     @picture = Picture.new
-    @chatroom = Chatroom.find_by(slug: params[:slug])
+    @chatroom = Chatroom.find_by(slug: params[:slug].upcase)
     @chatroom_messages = Chatroom.includes(:messages).find_by(id: params[:id])
     if @current_picture
       @current_picture
@@ -73,8 +94,10 @@ class ChatroomsController < ApplicationController
         end
       end
     end
-    
-
+    if @chatroom.pictures.length == 0
+      redirect_to "/#{@chatroom.slug}/waiting"
+      return
+    end
     @message = Message.new
   end
 

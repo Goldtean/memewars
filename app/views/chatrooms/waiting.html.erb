@@ -1,0 +1,53 @@
+<br><br>
+
+<div class="nav-offset container">
+  <div class="row col-xs-12 text-center">
+    <h1>Waiting</h1>
+    <h1>GAME CODE: <%= @chatroom.slug %></h1>
+  </div>
+</div>
+
+
+
+
+<div class="row col-md-8 col-md-offset-2">
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h4>Players</h4>
+    </div>
+    <% if @players.any? %>
+        <div class="hidden" id="players-count-hidden"><%= @players.count %></div>
+        <div class="hidden" id="players-ready-count-hidden"><%= @ready_players.count %></div>
+        <div class="panel-body" id="players">
+          <% @players.each do |player| %>
+            <p><%= render partial: 'players/show', locals: {player: player} %></p>
+          <% end %>
+        </div>
+    <%else%>
+      <div class="panel-body hidden" id="players">
+      </div>
+    <%end%>
+  </div>
+
+
+  <h1><%= @chatroom.topic %></h1>
+
+  <div class="panel panel-default">
+    <% if @chatroom.messages.any? %>
+      <div class="panel-body" id="messages">
+        <%= render @chatroom.messages %>
+      </div>
+    <%else%>
+      <div class="panel-body hidden" id="messages">
+      </div>
+    <%end%>
+  </div>
+
+
+
+  <% if current_user %>
+    <%= render partial: 'messages/message_form', locals: {message: @message, chatroom: @chatroom}%>
+  <% end %>
+
+</div>

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :pictures
   resources :memes
   resources :votes
+  get ':slug/waiting', to: "chatrooms#waiting"
   get ':slug', to: 'chatrooms#show'
   post 'chatrooms/join', to: 'chatrooms#join'
   
