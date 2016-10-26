@@ -1,35 +1,51 @@
 <br><br>
 
-<div class="nav-offset container">
-  <div class="row col-xs-12 text-center">
-    <h1>Waiting</h1>
-    <h1>GAME CODE: <%= @chatroom.slug %></h1>
-  </div>
+<div class="row col-xs-12 text-center">
+  <h1>Waiting</h1>
+  <h1>GAME CODE: <%= @chatroom.slug %></h1>
 </div>
 
-
+<div class="hidden" id="players-count-hidden"><%= @players.count %></div>
+<div class="hidden" id="players-ready-count-hidden"><%= @ready_players.count %></div>
 
 
 <div class="row col-md-8 col-md-offset-2">
 
-  <div class="panel panel-default">
+  <div class="panel panel-default col-xs-6">
     <div class="panel-body">
       <h4>Players</h4>
-    </div>
-    <% if @players.any? %>
-        <div class="hidden" id="players-count-hidden"><%= @players.count %></div>
-        <div class="hidden" id="players-ready-count-hidden"><%= @ready_players.count %></div>
-        <div class="panel-body" id="players">
+      <% if @players.any? %>
+      <section class="">
           <% @players.each do |player| %>
             <p><%= render partial: 'players/show', locals: {player: player} %></p>
           <% end %>
+      </section>
+    </div>
+  </div>
+
+    <div class="panel panel-default col-xs-6">
+      <div class="panel-body">
+      <h4>Ready</h4>
+      <% if @ready_players.any? %>
+        <% @ready_players.each do |ready_player| %>
+          <p><%= render partial: 'players/show', locals: {player: ready_player} %></p>
+        <% end %>
+      <%else%>
+        <div class="panel-body hidden" id="players">
         </div>
+      <%end%>
+    </div>
+
     <%else%>
       <div class="panel-body hidden" id="players">
       </div>
     <%end%>
   </div>
-
+    <% if @chatroom_player.status == "ready" %>
+      <%= render partial: 'chatrooms/unready' %><br>
+      <% else %>
+      <%= render partial: 'chatrooms/ready' %><br>
+    <% end %>
 
   <h1><%= @chatroom.topic %></h1>
 

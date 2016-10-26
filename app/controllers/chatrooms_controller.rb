@@ -52,6 +52,22 @@ class ChatroomsController < ApplicationController
     redirect_to chatroom
   end
 
+  def ready
+    # Players Ready State Control
+    @chatroom = Chatroom.find_by(slug: params[:slug])
+    @player_array = ChatroomPlayer.where(user_id: current_user.id, chatroom_id: @chatroom.id)
+    @player = @player_array[0]
+    if @player.status == "ready"
+      @player.status = "unready"
+    else
+      @player.status = "ready"
+    end
+    if @player.save!
+      redirect_to @chatroom
+      return
+    end
+  end
+
   def waiting
     @chatroom = Chatroom.find_by(slug: params[:slug])
     @message = Message.new
@@ -70,7 +86,7 @@ class ChatroomsController < ApplicationController
     #Establish Readiness And Shit
     @players = ChatroomPlayer.where(chatroom_id: @chatroom.id)
     @ready_players = ChatroomPlayer.where(chatroom_id: @chatroom.id, status: "ready")
-    
+
   end
 
   def show

@@ -37,7 +37,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.datetime :locked_at
       
       ## Memewarable
-      t.string :username
+      t.string :username, unique: true
       t.string :bio
 
       t.timestamps null: false

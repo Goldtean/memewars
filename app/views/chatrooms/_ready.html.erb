@@ -1,0 +1,6 @@
+<div class="ready-form">
+    <%= form_tag("/#{@chatroom.slug}/waiting/#{current_user.username}", method: "patch") do %>
+
+    <%= submit_tag("Ready", class: "btn btn-primary") %>
+    <% end %>
+</div>

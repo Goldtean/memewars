@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20161020220543) do
     t.integer  "user_id",                     null: false
     t.integer  "chatroom_id",                 null: false
     t.boolean  "creator",     default: false
+    t.string   "status"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.index ["chatroom_id"], name: "index_chatroom_players_on_chatroom_id", using: :btree

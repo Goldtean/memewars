@@ -14,5 +14,5 @@ var increaseCount = function() {
 
 
 var checkPlayersReady = function() {
-
+  readyPlayers = readyPlayers + parseInt($('#players-ready-count-hidden').text());
 };

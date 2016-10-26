@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get ':slug/waiting', to: "chatrooms#waiting"
   get ':slug', to: 'chatrooms#show'
   post 'chatrooms/join', to: 'chatrooms#join'
+  patch ':slug/waiting/:username', to: 'chatrooms#ready'
   
   # Serve websocket cable requests in-process
   mount ActionCable.server => '/cable'
