@@ -52,28 +52,6 @@ class ChatroomsController < ApplicationController
     redirect_to chatroom
   end
 
-  def ready
-    # Players Ready State Control
-    @chatroom = Chatroom.find_by(slug: params[:slug])
-    @player_array = ChatroomPlayer.where(user_id: current_user.id, chatroom_id: @chatroom.id)
-    @player = @player_array[0]
-    if @player.status == "ready"
-      @player.status = "unready"
-    else
-      @player.status = "ready"
-    end
-    if @player.save!
-      ActionCable.server.broadcast 'player',
-        username: current_user.username,
-        status: @player.status
-      head :ok
-      return
-    end
-
-
-
-  end
-
   def waiting
     @chatroom = Chatroom.find_by(slug: params[:slug])
     @message = Message.new
@@ -85,14 +63,22 @@ class ChatroomsController < ApplicationController
       @chatroom_player = ChatroomPlayer.new
       @chatroom_player.user_id = current_user.id
       @chatroom_player.chatroom_id = @chatroom.id
+      @chatroom_player.status = "new"
       if @chatroom_player.save!
+      # Establish Readiness In Case Of New Player
+      @players = ChatroomPlayer.where(chatroom_id: @chatroom.id)
+      @ready_players = ChatroomPlayer.where(chatroom_id: @chatroom.id, status: "ready")
+      # Shout it from the rooftops
         flash[:notice] = "Successfully joined game"
+        ActionCable.server.broadcast "chatrooms_#{@chatroom.slug}",
+          username: current_user.username,
+          status: @chatroom_player.status
+      return
       end
     end
-    #Establish Readiness And Shit
+    # Establish Readiness In Case Of Existing Player
     @players = ChatroomPlayer.where(chatroom_id: @chatroom.id)
     @ready_players = ChatroomPlayer.where(chatroom_id: @chatroom.id, status: "ready")
-
   end
 
   def show

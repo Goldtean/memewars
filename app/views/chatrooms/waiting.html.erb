@@ -8,24 +8,22 @@
 <div class="hidden" id="players-count-hidden"><%= @players.count %></div>
 <div class="hidden" id="players-ready-count-hidden"><%= @ready_players.count %></div>
 
-
 <div class="row col-xs-8 col-xs-offset-2">
   <div class="panel panel-default col-xs-6">
   <h4>Players</h4>
   <div class="panel-body">
     <% if @players.any? %>
-    <section class="">
+    <section class="" id="joined-players">
       <% @players.each do |player| %>
-        <p><%= render partial: 'players/show', locals: {player: player} %></p>
+        <p id="player-<%= player.user.username %>"><%= render partial: 'players/show', locals: {player: player} %></p>
       <% end %>
     </section>
     </div>
   </div>
     <%else%>
-      <div class="panel-body hidden">
-      </div>
+        <div class="panel-body hidden" id="joined-players">
+        </div>
     <%end%>
-
   <div class="panel panel-default col-xs-6">
     <h4>Ready</h4>
     <div class="panel-body" id="ready-players">
@@ -62,12 +60,15 @@
       </div>
         <br>
     <% end %>
+
+    <%=form_for @chatroom_player, method: :delete, remote: true, authenticity_token: true do |f|%>
+    <%= f.submit "Leave Game", class: "btn btn-primary", data: {send: "leave"} %>
+<%end%>
   </div>
 </div>
+
 <div class="row col-xs-8 col-xs-offset-2">
-
   <h1><%= @chatroom.topic %></h1>
-
   <div class="panel panel-default">
     <% if @chatroom.messages.any? %>
       <div class="panel-body" id="messages">
@@ -78,11 +79,11 @@
       </div>
     <%end%>
   </div>
-
-
-
   <% if current_user %>
     <%= render partial: 'messages/message_form', locals: {message: @message, chatroom: @chatroom}%>
   <% end %>
+</div>
 
+<div>
+  
 </div>

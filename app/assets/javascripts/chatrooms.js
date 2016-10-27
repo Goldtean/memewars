@@ -4,6 +4,7 @@ $(document).ready(function() {
   captionSubmission();
   readySend();
   unreadySend();
+  leaveGame();
 });
 
 function submitViaEnter() {
@@ -49,5 +50,13 @@ function unreadySend() {
     $('[data-send="unready"]').submit();
     $("#ready-button").removeClass('hidden');
     $("#unready-button").addClass('hidden');
+  });
+}
+
+function leaveGame() {
+  $('[data-send="leave"]').on('click', function(event){
+    event.preventDefault();
+    $('[data-send="leave"]').submit();
+    window.location.replace("/");
   });
 }

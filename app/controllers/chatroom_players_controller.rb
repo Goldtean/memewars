@@ -1,5 +1,17 @@
 class ChatroomPlayersController < ApplicationController
 
+  def destroy
+    @player = ChatroomPlayer.find(params[:id])
+    if @player.destroy!
+      @slug = Chatroom.find(@player.chatroom_id)
+      ActionCable.server.broadcast "chatrooms_#{@slug.slug}",
+        username: current_user.username,
+        status: "left"
+      head :ok
+      return
+    end
+  end
+
   def update
     @player = ChatroomPlayer.find(params[:id])
     if @player.status == "ready"
@@ -20,6 +32,6 @@ class ChatroomPlayersController < ApplicationController
   private
 
     def player_params
-      # params.require(:message).permit(:content, :chatroom_id)
+      params.require(:chatroom_player).permit(:status)
     end
 end

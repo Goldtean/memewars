@@ -1,0 +1,2 @@
+<%=form_for chatroom_player, method: :delete, remote: true, authenticity_token: true do |f|%>
+<%= f.submit "Leave Game", class: "btn btn-danger", data: {send: "leave"} %>
