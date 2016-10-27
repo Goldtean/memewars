@@ -63,9 +63,15 @@ class ChatroomsController < ApplicationController
       @player.status = "ready"
     end
     if @player.save!
-      redirect_to @chatroom
+      ActionCable.server.broadcast 'player',
+        username: current_user.username,
+        status: @player.status
+      head :ok
       return
     end
+
+
+
   end
 
   def waiting

@@ -2,13 +2,15 @@ $(document).ready(function() {
   submitViaEnter();
   submitViaSend();
   captionSubmission();
+  readySend();
+  unreadySend();
 });
 
 function submitViaEnter() {
   $('textarea#message_content').keydown(function(event) {
     if (event.keyCode == 13) {
       $('[data-send="message"]').click();
-      $('[data-textarea="message"]').val(" ")
+      $('[data-textarea="message"]').val(" ");
       return false;
      }
   });
@@ -29,6 +31,23 @@ function captionSubmission() {
     $('[data-send="meme"]').submit();
     $('#new_meme').hide();
     // $('#new_meme').submit();
+  });
+}
 
-  })
+function readySend() {
+  $('[data-send="ready"]').on('click', function(event) {
+    event.preventDefault();
+    $('[data-send="ready"]').submit();
+    $("#unready-button").removeClass('hidden');
+    $("#ready-button").addClass('hidden');
+  });
+}
+
+function unreadySend() {
+  $('[data-send="unready"]').on('click', function(event) {
+    event.preventDefault();
+    $('[data-send="unready"]').submit();
+    $("#ready-button").removeClass('hidden');
+    $("#unready-button").addClass('hidden');
+  });
 }

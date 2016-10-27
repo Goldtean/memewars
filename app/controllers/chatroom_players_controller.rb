@@ -1,21 +1,20 @@
 class ChatroomPlayersController < ApplicationController
-  def ready
-    # chatroom = Chatroom.find_by(slug: params[:slug])
-    # playerarray = ChatroomPlayer.where(user_id: current_user.id, chatroom_id: chatroom.id)
-    # player = playerarray[0]
-    # player.status = "ready"
-    # if player.save!
-    #   ActionCable.server.broadcast "chatrooms_#{chatroom.id}_channel",
-    #     new_player_ready: player.id
-    #   head :ok
-    # end
-    # message.user = current_user
-    # if message.save
-    #   ActionCable.server.broadcast "messages_#{message.chatroom_id}_channel",
-    #     message: message.content,
-    #     user: message.user.username
-    #   head :ok
-    # end
+
+  def update
+    @player = ChatroomPlayer.find(params[:id])
+    if @player.status == "ready"
+      @player.status = "unready"
+    else
+      @player.status = "ready"
+    end
+    if @player.save!
+      @slug = Chatroom.find(@player.chatroom_id)
+      ActionCable.server.broadcast "chatrooms_#{@slug.slug}",
+        username: current_user.username,
+        status: @player.status
+      head :ok
+      return
+    end
   end
 
   private

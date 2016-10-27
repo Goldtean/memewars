@@ -1,15 +1,16 @@
 $(document).ready(function() {
-
-  App.player = App.cable.subscriptions.create({channel: 'ChatroomsChannel', chatroom_id: chatroomId}, {  
+  chatroomSlug = $('#chatroom-slug').text();
+  App.player = App.cable.subscriptions.create({channel: 'ChatroomsChannel', slug: chatroomSlug}, {  
     received: function(data) {
-      $("#players").removeClass('hidden');
-      return $('#messages').append(this.renderMessage(data));
-    },
-    chatroom_id: function(data) {
-      return data.chatroom_id
+      $("#ready-players").removeClass('hidden');
+      if (data.status == "ready") {
+        return $('#ready-players').append(this.renderMessage(data));
+      } else if (data.status == "unready") {
+        return $('#'+ data.username).remove();
+      }
     },
     renderMessage: function(data) {
-      return "<p> <b>" + data.user + ": </b>" + data.message + "</p>";
+      return "<p id='" + data.username + "' >" + data.username + "</p>";
     }
   });
 

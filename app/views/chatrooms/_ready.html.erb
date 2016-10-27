@@ -1,6 +1,5 @@
-<div class="ready-form">
-    <%= form_tag("/#{@chatroom.slug}/waiting/#{current_user.username}", method: "patch") do %>
-
-    <%= submit_tag("Ready", class: "btn btn-primary") %>
-    <% end %>
-</div>
+<%=form_for @chatroom_player, remote: true, authenticity_token: true do |f|%>
+  <%= f.hidden_field :username, value: current_user.username %>
+  <%= f.hidden_field :status, value: "ready" %>
+  <%= f.submit "Ready", class: "btn btn-primary", data: {send: "ready"} %>
+<%end%>
