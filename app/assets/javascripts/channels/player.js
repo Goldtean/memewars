@@ -6,13 +6,18 @@ $(document).ready(function() {
       // Real Time Add And Remove Player From Ready List
       $("#ready-players").removeClass('hidden');
       if (data.status == "new") {
+        // numberOfJoinedPlayers++;
         return $('#joined-players').append(this.renderJoined(data));
       } else if (data.status == "left") {
+        // numberOfJoinedPlayers = numberOfJoinedPlayers - 1;
         $('#'+ data.username).remove();
         return $('#player-'+ data.username).remove();
       } else if (data.status == "ready") {
-        return $('#ready-players').append(this.renderReady(data));
+        // numberOfReadyPlayers++;
+        $('#ready-players').append(this.renderReady(data));
+        return checkChatroomReadyStatus();
       } else if (data.status == "unready") {
+        // numberOfReadyPlayers = numberOfReadyPlayers - 1;
         return $('#'+ data.username).remove();
       };
     },

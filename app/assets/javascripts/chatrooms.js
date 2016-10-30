@@ -1,12 +1,16 @@
 $(document).ready(function() {
+  // Chat
   submitViaEnter();
   submitViaSend();
+  // Real Time caption
   captionSubmission();
+  // Ready / Unready / Leave Game
   readySend();
   unreadySend();
   leaveGame();
 });
-
+// Chatroom Real Time Send / Receive
+// Data via message_chatroom_id channel
 function submitViaEnter() {
   $('textarea#message_content').keydown(function(event) {
     if (event.keyCode == 13) {
@@ -25,7 +29,8 @@ function submitViaSend() {
     $('textarea#message_content').focus();
   });
 }
-
+// Caption Real Time Send
+// Data via meme channel
 function captionSubmission() {
   $('[data-send="meme"]').on('click', function(event){
     event.preventDefault();
@@ -34,7 +39,8 @@ function captionSubmission() {
     // $('#new_meme').submit();
   });
 }
-
+// Real Time Ready, remove ready button, add unready button
+// Data via chatroom_slug channel, receive via player.js
 function readySend() {
   $('[data-send="ready"]').on('click', function(event) {
     event.preventDefault();
@@ -43,7 +49,8 @@ function readySend() {
     $("#ready-button").addClass('hidden');
   });
 }
-
+// Real Time Unready, remove unready button, add ready button
+// Data via chatroom_slug channel, receive via player.js
 function unreadySend() {
   $('[data-send="unready"]').on('click', function(event) {
     event.preventDefault();
@@ -52,7 +59,8 @@ function unreadySend() {
     $("#unready-button").addClass('hidden');
   });
 }
-
+// Real Time Leave
+// Data via chatroom_slug channel, receive via player.js
 function leaveGame() {
   $('[data-send="leave"]').on('click', function(event){
     event.preventDefault();

@@ -1,18 +1,28 @@
-$(document).ready(function() {
-  increaseCount();
-  checkPlayersReady();
-});
+// $(document).ready(function() {
+//   joinedPlayerCount();
+//   readyPlayerCount();
+// });
 
 
-var playerCount = 0;
+// var joinedPlayerCount = function() {
+//   numberOfJoinedPlayers = $("#joined-players p").length;
+//   $('#chatroom-slug').numberOfJoinedPlayers = $("#joined-players p").length;
+// }
+// var readyPlayerCount = function() {
+//   numberOfReadyPlayers = $("#ready-players p").length;
+// }
 
-var readyPlayers = 0;
+// var advanceGameToMemeing = function() {
+//   if (numberOfReadyPlayers > 2) {
+//     if (numberOfReadyPlayers == numberOfJoinedPlayers) {
+//       window.location.replace("/" + $('#chatroom-slug') + "/meme");
+//     }
+//   }
+// }
 
-var increaseCount = function() {
-  playerCount = playerCount + parseInt($('#players-count-hidden').text());
-};
-
-
-var checkPlayersReady = function() {
-  readyPlayers = readyPlayers + parseInt($('#players-ready-count-hidden').text());
-};
+var checkChatroomReadyStatus = function() {
+  if ($("#ready-players p").length > 2 && $("#ready-players p").length == $("#joined-players p").length) {
+    url = "/" + $('#chatroom-slug').text() + "/meme";
+    window.location.replace(url);
+  }
+}

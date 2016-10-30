@@ -32,10 +32,15 @@ class ChatroomsController < ApplicationController
 
   def create
     @chatroom = Chatroom.new(chatroom_params)
-    if @chatroom.save
-      respond_to do |format|
-        format.html { redirect_to "/#{@chatroom.slug}" }
-        format.js { redirect_to "/#{@chatroom.slug}" }
+    if @chatroom.save!
+      offset = rand(Picture.count)
+      rando_picrissian = Picture.offset(offset).first
+      @chatroom_picture = ChatroomPicture.new(chatroom: @chatroom, picture: rando_picrissian)
+      if @chatroom_picture.save
+        respond_to do |format|
+          format.html { redirect_to "/#{@chatroom.slug}" }
+          format.js { redirect_to "/#{@chatroom.slug}" }
+        end
       end
     else
       respond_to do |format|
@@ -81,6 +86,13 @@ class ChatroomsController < ApplicationController
     @ready_players = ChatroomPlayer.where(chatroom_id: @chatroom.id, status: "ready")
   end
 
+  def meme
+    @meme = Meme.new
+    @message = Message.new
+    @chatroom = Chatroom.find_by(slug: params[:slug])
+    @chatroom_picture = ChatroomPicture.where(chatroom: @chatroom).last
+  end
+
   def show
     @vote = Vote.new
     @meme = Meme.new
@@ -102,9 +114,16 @@ class ChatroomsController < ApplicationController
         end
       end
     end
-    if @chatroom.pictures.length == 0
+    if @chatroom.pictures.length == 0 
       redirect_to "/#{@chatroom.slug}/waiting"
       return
+    elsif @chatroom.pictures.length > 0
+      if @chatroom.chatroom_pictures.last.winner
+          redirect_to "/#{@chatroom.slug}/waiting"
+        return
+      end
+        redirect_to "/#{@chatroom.slug}/waiting"
+        return
     end
     @message = Message.new
   end

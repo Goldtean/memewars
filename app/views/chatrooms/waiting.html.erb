@@ -5,8 +5,6 @@
   <h3>GAME CODE: <strong id="chatroom-slug"><%= @chatroom.slug %></strong></h3>
 </div>
 
-<div class="hidden" id="players-count-hidden"><%= @players.count %></div>
-<div class="hidden" id="players-ready-count-hidden"><%= @ready_players.count %></div>
 
 <div class="row col-xs-8 col-xs-offset-2">
   <div class="panel panel-default col-xs-6">
@@ -60,7 +58,6 @@
       </div>
         <br>
     <% end %>
-
     <%= render partial: 'chatrooms/leave', locals: {chatroom_player: @chatroom_player}%>
   </div>
 </div>
