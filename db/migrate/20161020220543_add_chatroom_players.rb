@@ -4,6 +4,7 @@ class AddChatroomPlayers < ActiveRecord::Migration[5.0]
       t.references :user, index: true, foreign_key: :true, null: false
       t.references :chatroom, index: true, foreign_key: true, null: false
       t.boolean :creator, default: false
+      t.string :playername
       t.string :status
       t.timestamps null: false
     end

@@ -3,7 +3,7 @@
   <%= f.hidden_field(:picture_id, value: @chatroom_picture.id) %>
   
   <div class="field row">
-    <%= f.text_field :caption, class: "col-xs-8 col-xs-offset-2" %>
+    <%= f.text_field :caption, class: "col-xs-12" %>
   </div>
   <div class="actions row">
     <%= f.submit 'Submit Meme', class: "btn btn-primary", data: {send: "meme"} %>
