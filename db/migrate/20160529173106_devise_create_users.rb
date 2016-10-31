@@ -39,6 +39,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       ## Memewarable
       t.string :username, unique: true
       t.string :bio
+      t.integer :wins
 
       t.timestamps null: false
     end

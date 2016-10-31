@@ -1,6 +1,6 @@
 class Chatroom < ApplicationRecord
   has_many :messages, dependent: :destroy
-  has_many :users, through: :messages
+  has_many :chatroom_players, through: :messages
   # belongs_to :game
   has_many :chatroom_pictures
   has_many :pictures, through: :chatroom_pictures

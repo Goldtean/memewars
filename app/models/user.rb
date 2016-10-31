@@ -2,17 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   
-  # has_many :pictures
-  
-  has_many :memes, dependent: :destroy
-  has_many :pictures, through: :memes
-  
-  has_many :votes
-  has_many :memes, through: :votes
-  # User has many messages and many chatrooms
-  has_many :messages, dependent: :destroy
-  has_many :chatrooms, through: :messages
-
+  # User has many ChatroomPlayers
   has_many :chatroom_players
   has_many :games,
     through: :chatroom_players,
