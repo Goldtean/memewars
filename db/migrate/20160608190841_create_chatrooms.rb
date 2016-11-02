@@ -4,7 +4,7 @@ class CreateChatrooms < ActiveRecord::Migration[5.0]
       t.string :topic
       t.string :slug, null: false
       t.boolean :private
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

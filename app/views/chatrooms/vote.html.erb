@@ -1,27 +1,35 @@
 <br><br><br>
-
-<div class="row hidden" id="memes-left-to-submit">
-  <%= @ready_player_count - @chatroom_picture.memes.length %>
+<div class="row hidden" id="votes-left-to-submit">
+  <%= @chatroom_picture.memes.length - @vote_count %>
 </div>
 
 <div class="row col-xs-12 text-center">
-  <h4>Meme This Photo</h4>
   <h3>GAME CODE: <strong id="chatroom-slug"><%= @chatroom.slug %></strong></h3>
 </div>
 
 <div class="text-center">
   <%= image_tag @chatroom_picture.picture.url %>
 </div>
-<br>
-<div class="text-center row col-xs-8 col-xs-offset-2">
-  <div class="row">
-    <% if @chatroom_player_meme %>
-      <%= render partial: 'memes/meme_form' %>
-    <% end %>
+
+
+<div class="row col-xs-8 col-xs-offset-2 text-center" id="vote-for-captions">
+
+    <% if @chatroom_player.votes.count < @chatroom.chatroom_pictures.count %>
+  <h4>Vote For The Best Meme</h4>
+  <div class="panel panel-default">
+
+        <div class="panel-body" id="memes">
+          <% @memes.each do |meme| %> 
+          <%= render partial: "memes/meme", locals: {meme: meme} %>
+        <% end %>
+        </div>
+        
+    <%else%>
+      <div class="panel-body hidden" id="memes">
+      </div>
+    <%end%>
   </div>
-
 </div>
-
 
 <div class="row col-xs-8 col-xs-offset-2">
   <h1><%= @chatroom.topic %></h1>

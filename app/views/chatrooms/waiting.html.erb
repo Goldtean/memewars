@@ -75,7 +75,7 @@
     <%end%>
   </div>
   <% if current_user %>
-    <%= render partial: 'messages/message_form', locals: {message: @message, chatroom: @chatroom}%>
+    <%= render partial: 'messages/message_form', locals: {message: @message, chatroom: @chatroom, chatroom_player: @chatroom_player}%>
   <% end %>
 </div>
 

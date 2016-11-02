@@ -4,6 +4,9 @@ $(document).ready(function() {
   submitViaSend();
   // Real Time caption
   captionSubmission();
+  // Real Time Vote
+  $('.vote-form').on('click', removeVoteButton);
+  checkVoteSubmissionStatus();
   // Ready / Unready / Leave Game
   readySend();
   unreadySend();
@@ -35,10 +38,16 @@ function captionSubmission() {
   $('[data-send="meme"]').on('click', function(event){
     event.preventDefault();
     $('[data-send="meme"]').submit();
-    $('#new_meme').hide();
-    // $('#new_meme').submit();
+    $('#new_meme').remove();
   });
 }
+// Real Time Vote Send
+// Data via meme channel
+var removeVoteButton = function() {
+  $('#vote-for-captions').hide();
+}
+
+
 // Real Time Ready, remove ready button, add unready button
 // Data via chatroom_slug channel, receive via player.js
 function readySend() {

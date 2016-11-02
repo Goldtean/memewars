@@ -1,0 +1,22 @@
+<br><br><br>
+
+
+<div class="row col-xs-12 text-center">
+  <h3>GAME CODE: <strong id="chatroom-slug"><%= @chatroom.slug %></strong></h3>
+</div>
+
+<div class="text-center">
+  <%= image_tag @chatroom_picture.picture.url %>
+</div>
+
+<div class="row col-xs-8 col-xs-offset-2 text-center">
+<div><p><strong>Winner: <%= @winner.caption %></strong></p></div>
+
+  <div class="panel-body" id="memes">
+    <% @memes.each do |meme| %> 
+    <%= render partial: "memes/show", locals: {meme: meme} %>
+  <% end %>
+  </div>
+</div>
+
+<meta HTTP-EQUIV="REFRESH" content="10; url=waiting">

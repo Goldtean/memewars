@@ -1,6 +1,7 @@
 <%= form_for(@meme, mutipart: true, remote: true, authenticity_token: true) do |f| %>
 
-  <%= f.hidden_field(:picture_id, value: @chatroom_picture.id) %>
+  <%= f.hidden_field(:chatroom_picture_id, value: @chatroom_picture.id) %>
+  <%= f.hidden_field(:chatroom_player_id, value: @chatroom_player.id) %>
   
   <div class="field row">
     <%= f.text_field :caption, class: "col-xs-12" %>

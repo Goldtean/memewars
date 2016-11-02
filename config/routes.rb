@@ -14,8 +14,12 @@ Rails.application.routes.draw do
   resources :chatroom_players
   get ':slug/waiting', to: "chatrooms#waiting"
   get ':slug/meme', to: "chatrooms#meme"
+  get ':slug/vote', to: "chatrooms#vote"
+  get ':slug/winner', to: "chatrooms#winner"
+  get ':slug/waiting' => 'chatrooms#waiting', :as => :redirect_to_waiting
   get ':slug', to: 'chatrooms#show'
   post 'chatrooms/join', to: 'chatrooms#join'
+
   
   # Serve websocket cable requests in-process
   mount ActionCable.server => '/cable'

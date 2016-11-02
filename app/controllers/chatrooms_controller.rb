@@ -58,17 +58,31 @@ class ChatroomsController < ApplicationController
   end
 
   def waiting
+    
+    # if @chatroom_picture = ChatroomPicture.where(chatroom: @chatroom).last
+    #   if @chatroom_picture.winner == true
+    #     offset = rand(Picture.count)
+    #     rando_picrissian = Picture.offset(offset).first
+    #     @new_chatroom_picture = ChatroomPicture.new(chatroom: @chatroom, picture: rando_picrissian)
+    #     @new_chatroom_picture.save!
+    #   end
+    # end
+
     @chatroom = Chatroom.find_by(slug: params[:slug])
     @message = Message.new
     # Register Player To Game
     @current_player = ChatroomPlayer.where(user_id: current_user.id, chatroom_id: @chatroom.id)
     if @current_player.length > 0
       @chatroom_player = @current_player[0]
-      else
+    else
       @chatroom_player = ChatroomPlayer.new
       @chatroom_player.user_id = current_user.id
       @chatroom_player.chatroom_id = @chatroom.id
+      @chatroom_player.playername = current_user.username
       @chatroom_player.status = "new"
+      if @chatroom.players.length == 0
+        @chatroom_player.creator = true
+      end
       if @chatroom_player.save!
       # Establish Readiness In Case Of New Player
       @players = ChatroomPlayer.where(chatroom_id: @chatroom.id)
@@ -86,43 +100,83 @@ class ChatroomsController < ApplicationController
     @ready_players = ChatroomPlayer.where(chatroom_id: @chatroom.id, status: "ready")
   end
 
-  def meme
-    @meme = Meme.new
-    @message = Message.new
-    @chatroom = Chatroom.find_by(slug: params[:slug])
-    @chatroom_picture = ChatroomPicture.where(chatroom: @chatroom).last
-  end
+  def winner
 
-  def show
-    @vote = Vote.new
-    @meme = Meme.new
-    @picture = Picture.new
-    @chatroom = Chatroom.find_by(slug: params[:slug].upcase)
-    @chatroom_messages = Chatroom.includes(:messages).find_by(id: params[:id])
-    if @current_picture
-      @current_picture
-      @current_meme = @current_picture.memes.where(user: current_user)
-      if @current_picture.memes
-        @memes = @current_picture.memes
-      end
-    else
-      if @chatroom.pictures.length > 0
-        @current_picture = Picture.find_by(id: @chatroom.chatroom_pictures.where('winner' == 'null').first.picture_id)
-        if @current_picture.memes
-          @memes = @current_picture.memes
-          @current_meme = @current_picture.memes.where(user: current_user)
+
+    @chatroom = Chatroom.find_by(slug: params[:slug])
+    @current_player = ChatroomPlayer.where(user_id: current_user.id, chatroom_id: @chatroom.id)
+    @chatroom_player = @current_player[0]
+    @chatroom_player.status = "unready"
+    @chatroom_player.save!
+
+    @chatroom_picture = ChatroomPicture.where(chatroom: @chatroom).last
+    @memes = @chatroom_picture.memes
+
+    meme_array = []
+    @memes.each do |meme|
+      if meme_array.length == 0
+        meme_array << meme
+      else
+        if meme.votes.count > meme_array[0].votes.count
+          meme_array.pop
+          meme_array << meme
         end
       end
     end
-    if @chatroom.pictures.length == 0 
+
+    @winner = meme_array[0]
+    if @chatroom_player.creator == true && @chatroom_picture.winner != true
+      @chatroom_picture.winner = true
+      @chatroom_picture.save!
+      offset = rand(Picture.count)
+      rando_picrissian = Picture.offset(offset).first
+      @new_chatroom_picture = ChatroomPicture.new(chatroom: @chatroom, picture: rando_picrissian)
+      @new_chatroom_picture.save!
+    end
+
+  end
+
+  def meme
+    @chatroom = Chatroom.find_by(slug: params[:slug])
+    @current_player = ChatroomPlayer.where(user_id: current_user.id, chatroom_id: @chatroom.id)
+    @chatroom_player = @current_player[0]
+    @meme = Meme.new
+    @message = Message.new
+    @chatroom_picture = ChatroomPicture.where(chatroom: @chatroom).last
+    if Meme.where(chatroom_player_id: @chatroom_player.id, chatroom_picture_id: @chatroom_picture.id).length < 1
+       @chatroom_player_meme = "doesn't exist"
+    end
+    @ready_player_count = ChatroomPlayer.where(chatroom_id: @chatroom.id, status: "ready").length
+
+  end
+
+  def vote
+    @vote = Vote.new
+    @chatroom = Chatroom.find_by(slug: params[:slug])
+    @current_player = ChatroomPlayer.where(user_id: current_user.id, chatroom_id: @chatroom.id)
+    @chatroom_player = @current_player[0]
+    @message = Message.new
+    @chatroom_picture = ChatroomPicture.where(chatroom: @chatroom).last
+    @memes = @chatroom_picture.memes
+    @own_meme = @chatroom_picture.memes.where(chatroom_player_id: @chatroom_player.id).last
+    @memes = @memes - [@own_meme]
+    @vote_count = 0
+    @chatroom_picture.memes.each do |meme|
+      @vote_count += meme.voters.length
+    end
+  end
+
+  def show
+    @chatroom = Chatroom.find_by(slug: params[:slug].upcase)
+    if @chatroom.chatroom_pictures.length == 0 
       redirect_to "/#{@chatroom.slug}/waiting"
       return
     elsif @chatroom.pictures.length > 0
-      if ((@chatroom.players.length > 2) && (@chatroom.chatroom_players.where(status: "ready").length == @chatroom.players.length))
-        redirect_to "/#{@chatroom.slug}/meme"
+      if @chatroom.chatroom_pictures.last.memes.length == @chatroom.chatroom_players.where(status: "ready").length
+        redirect_to "/#{@chatroom.slug}/vote"
         return
-      elsif @chatroom.chatroom_pictures.last.winner
-          redirect_to "/#{@chatroom.slug}/waiting"
+      elsif ((@chatroom.players.length > 2) && (@chatroom.chatroom_players.where(status: "ready").length == @chatroom.players.length))
+        redirect_to "/#{@chatroom.slug}/meme"
         return
       end
         redirect_to "/#{@chatroom.slug}/waiting"

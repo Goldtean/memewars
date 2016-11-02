@@ -2,9 +2,6 @@ class Picture < ApplicationRecord
   has_many :chatroom_pictures
   has_many :chatrooms, through: :chatroom_pictures
 
-  has_many :memes
-  has_many :users, through: :memes
-
   validates :avatar,
     attachment_content_type: { content_type: /\Aimage\/.*\Z/ },
     attachment_size: { less_than: 4.megabytes }

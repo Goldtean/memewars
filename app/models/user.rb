@@ -9,10 +9,6 @@ class User < ApplicationRecord
     source: :chatroom,
     class_name: "Chatroom"
 
-  # User belongs to games as player and winner
-  # belongs_to :winner, class_name: 'User'
-  # belongs_to :player, class_name: 'User'
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook]
