@@ -98,6 +98,13 @@ class ChatroomsController < ApplicationController
     # Establish Readiness In Case Of Existing Player
     @players = ChatroomPlayer.where(chatroom_id: @chatroom.id)
     @ready_players = ChatroomPlayer.where(chatroom_id: @chatroom.id, status: "ready")
+    # New Picture If This Is Not A New Game
+    if @chatroom_player.creator == true && ChatroomPicture.where(chatroom: @chatroom, winner: true).length == ChatroomPicture.where(chatroom: @chatroom).length
+      offset = rand(Picture.count)
+      rando_picrissian = Picture.offset(offset).first
+      @new_chatroom_picture = ChatroomPicture.new(chatroom: @chatroom, picture: rando_picrissian)
+      @new_chatroom_picture.save!
+    end
   end
 
   def winner
@@ -128,10 +135,6 @@ class ChatroomsController < ApplicationController
     if @chatroom_player.creator == true && @chatroom_picture.winner != true
       @chatroom_picture.winner = true
       @chatroom_picture.save!
-      offset = rand(Picture.count)
-      rando_picrissian = Picture.offset(offset).first
-      @new_chatroom_picture = ChatroomPicture.new(chatroom: @chatroom, picture: rando_picrissian)
-      @new_chatroom_picture.save!
     end
 
   end

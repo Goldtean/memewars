@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   get ':slug/meme', to: "chatrooms#meme"
   get ':slug/vote', to: "chatrooms#vote"
   get ':slug/winner', to: "chatrooms#winner"
-  get ':slug/waiting' => 'chatrooms#waiting', :as => :redirect_to_waiting
   get ':slug', to: 'chatrooms#show'
   post 'chatrooms/join', to: 'chatrooms#join'
 
