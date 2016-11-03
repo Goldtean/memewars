@@ -40,6 +40,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :username, unique: true
       t.string :bio
       t.integer :wins
+      t.string :image_url
 
       t.timestamps null: false
     end

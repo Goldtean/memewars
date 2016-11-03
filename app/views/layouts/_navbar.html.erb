@@ -15,16 +15,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-left">
-        <% if current_user %>
-          <% if current_user.username %>
-            <li>
-              <%= link_to "new game", new_chatroom_path%>
-            </li>
-            <li>
-              <%= link_to "games", chatrooms_path %>
-            </li> 
-          <% end %>
-        <% end %>
+
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
@@ -46,7 +37,6 @@
             <li><%= link_to 'profile',edit_user_registration_path %></li>
             <li><%= link_to "sign out", "/users/sign_out", method: :delete, id: "sign_out" %></li>
           <% else %>
-            <li><a href="/users/sign_in">login</a></li>
             <li><a class="fa fa-facebook"></a></li>
             <li><%= link_to "Facebook Login", "/users/auth/facebook", id: "sign_in" %></li>
           <% end %>
