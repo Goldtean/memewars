@@ -1,4 +1,4 @@
-<br><br><br>
+
 <div class="row hidden" id="votes-left-to-submit">
   <%= @chatroom_picture.memes.length - @vote_count %>
 </div>
@@ -8,7 +8,7 @@
 </div>
 
 <div class="text-center">
-  <%= image_tag @chatroom_picture.picture.url %>
+  <%= image_tag @chatroom_picture.picture.url, height: "300" %>
 </div>
 
 
@@ -19,11 +19,11 @@
   <div class="panel panel-default">
 
         <div class="panel-body" id="memes">
-          <% @memes.each do |meme| %> 
+          <% @memes.shuffle.each do |meme| %> 
           <%= render partial: "memes/meme", locals: {meme: meme} %>
         <% end %>
         </div>
-        
+
     <%else%>
       <div class="panel-body hidden" id="memes">
       </div>

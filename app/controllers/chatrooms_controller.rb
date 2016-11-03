@@ -133,6 +133,8 @@ class ChatroomsController < ApplicationController
 
     @winner = meme_array[0]
     if @chatroom_player.creator == true && @chatroom_picture.winner != true
+      @winner.winner = true
+      @winner.save!
       @chatroom_picture.winner = true
       @chatroom_picture.save!
     end

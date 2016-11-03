@@ -1,41 +1,46 @@
-<br><br><br>
 
-<div class="row hidden" id="memes-left-to-submit">
-  <%= @ready_player_count - @chatroom_picture.memes.length %>
-</div>
+<div class="container">
+  <div class="row col-xs-12 text-center">
+    <h4>Meme This Photo</h4>
+    <h3>GAME CODE: <strong id="chatroom-slug"><%= @chatroom.slug %></strong></h3>
+  </div>
 
-<div class="row col-xs-12 text-center">
-  <h4>Meme This Photo</h4>
-  <h3>GAME CODE: <strong id="chatroom-slug"><%= @chatroom.slug %></strong></h3>
-</div>
+    <p class="text-center">Memes to be submitted:</p>
 
-<div class="text-center">
-  <%= image_tag @chatroom_picture.picture.url %>
-</div>
-<br>
-<div class="text-center row col-xs-8 col-xs-offset-2">
-  <div class="row">
-    <% if @chatroom_player_meme %>
-      <%= render partial: 'memes/meme_form' %>
+  <div class="row text-center" id="memes-left-to-submit">
+    <%= @ready_player_count - @chatroom_picture.memes.length %>
+  </div>
+
+  <div class="text-center">
+    <%= image_tag @chatroom_picture.picture.url, height: "300" %>
+  </div>
+  <br>
+  <div class="text-center row col-xs-8 col-xs-offset-2">
+    <div class="row">
+      <% if @chatroom_player_meme %>
+        <%= render partial: 'memes/meme_form' %>
+      <% end %>
+    </div>
+
+  </div>
+
+
+
+  <div class="row col-xs-8 col-xs-offset-2">
+    <h1><%= @chatroom.topic %></h1>
+    <div class="panel panel-default">
+      <% if @chatroom.messages.any? %>
+        <div class="panel-body" id="messages">
+          <%= render @chatroom.messages %>
+        </div>
+      <%else%>
+        <div class="panel-body hidden" id="messages">
+        </div>
+      <%end%>
+    </div>
+    <% if current_user %>
+      <%= render partial: 'messages/message_form', locals: {message: @message, chatroom: @chatroom, chatroom_player: @chatroom_player}%>
     <% end %>
   </div>
 
-</div>
-
-
-<div class="row col-xs-8 col-xs-offset-2">
-  <h1><%= @chatroom.topic %></h1>
-  <div class="panel panel-default">
-    <% if @chatroom.messages.any? %>
-      <div class="panel-body" id="messages">
-        <%= render @chatroom.messages %>
-      </div>
-    <%else%>
-      <div class="panel-body hidden" id="messages">
-      </div>
-    <%end%>
-  </div>
-  <% if current_user %>
-    <%= render partial: 'messages/message_form', locals: {message: @message, chatroom: @chatroom, chatroom_player: @chatroom_player}%>
-  <% end %>
 </div>

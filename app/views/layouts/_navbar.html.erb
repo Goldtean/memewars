@@ -26,7 +26,6 @@
           <% end %>
         <% end %>
       </ul>
-      <ul class="nav navbar-nav"><div class="errors_partial"><%= render partial: 'layouts/flash_errors'%></div></ul>
 
       <ul class="nav navbar-nav navbar-right">
           <li class="hidden">
@@ -55,3 +54,7 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->    
 </nav>
+<br><br><br>
+<div class="container errors text-center">
+  <div class="errors_partial"><%= render partial: 'layouts/flash_errors'%></div>
+</div>

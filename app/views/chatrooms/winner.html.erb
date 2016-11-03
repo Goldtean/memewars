@@ -1,16 +1,16 @@
-<br><br><br>
-
 
 <div class="row col-xs-12 text-center">
   <h3>GAME CODE: <strong id="chatroom-slug"><%= @chatroom.slug %></strong></h3>
 </div>
 
 <div class="text-center">
-  <%= image_tag @chatroom_picture.picture.url %>
+  <%= image_tag @chatroom_picture.picture.url, height: "300" %>
 </div>
 
 <div class="row col-xs-8 col-xs-offset-2 text-center">
-<div><p><strong>Winner: <%= @winner.caption %></strong></p></div>
+<div><p><strong>Winning Meme: <%= @winner.caption %></strong></p></div>
+<div><p><strong>Writer: <%= @winner.chatroom_player.playername %></strong></p></div>
+<div><p>You will be redirected in 10 seconds</strong></p></div>
 
   <div class="panel-body" id="memes">
     <% @memes.each do |meme| %> 
