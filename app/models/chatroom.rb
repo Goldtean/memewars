@@ -5,10 +5,10 @@ class Chatroom < ApplicationRecord
     source: :chatroom_players,
     class_name: "ChatroomPlayer"
   # Chatroom has many ChatroomPictures, Pictures through ChatroomPictures
-  has_many :chatroom_pictures
+  has_many :chatroom_pictures, dependent: :destroy
   has_many :pictures, through: :chatroom_pictures
 
-  has_many :chatroom_players
+  has_many :chatroom_players, dependent: :destroy
   has_many :players,
     through: :chatroom_players,
     source: :user,

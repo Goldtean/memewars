@@ -1,6 +1,6 @@
 class ChatroomPlayer < ApplicationRecord
   # ChatroomPlayer has many Votes, has Memes through votes
-  has_many :votes
+  has_many :votes, dependent: :destroy
   has_many :voted_for_memes,
     through: :votes,
     source: :memes,
@@ -14,6 +14,5 @@ class ChatroomPlayer < ApplicationRecord
   # ChatroomPlayer belongs to User & Chatroom
   belongs_to :chatroom
   belongs_to :user
-
 
 end

@@ -115,7 +115,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="718" y="5" name="votes">
+<table x="713" y="56" name="votes">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>

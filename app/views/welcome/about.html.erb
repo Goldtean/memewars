@@ -1,22 +1,25 @@
 <div class="jumbotron">
-  
+  <div class="container">
+  <br>
+    <% unless current_user %>
   <h1 class="text-center">Welcome to Meme Wars!</h1>
-  
+  <br>
+      <div class="row text-center">
+        <div class="col-xs-12">
+          <%= link_to "Facebook Login", "/users/auth/facebook", id: "sign_in", class: "btn btn-primary btn-lg" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
   <%if current_user%>
     <% if current_user.username %>
     <p class="text-center">Arnold: "Nice to see you, <%= current_user.username.capitalize %>.<br> <%= Arnold.quote %>"</p>
     <%else%>
-    <p class="text-center">Nice to see you, <span>
-      <% if current_user.name%>
-        <%= current_user.name %>
-      <%else%>
-        <%= current_user.email%>
-        <%end%>
-      </span></p>
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
         <h2 id="log-in-title">You need a user name!</h2>
-        <p>We don't want you to hold back on your hilarious meme making ability on account of your magnanimous social medial profile.</p>
+        <p>You will only be known as your user name and we will never share your email address, name, or Facebook picture, which is all the information we receive about you from Facebook. Facebook authentication is only required so that we can weed out bots and hackers. It is also more secure.</p>
         <div class="auth-form well">
           <%= form_for(:user, url: registration_path(:user), method: 'patch') do |f| %>
             <%=f.label :username%>

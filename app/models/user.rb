@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   
   # User has many ChatroomPlayers
-  has_many :chatroom_players
+  has_many :chatroom_players, dependent: :destroy
   has_many :games,
     through: :chatroom_players,
     source: :chatroom,

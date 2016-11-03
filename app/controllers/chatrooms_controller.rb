@@ -175,7 +175,7 @@ class ChatroomsController < ApplicationController
       redirect_to "/#{@chatroom.slug}/waiting"
       return
     elsif @chatroom.pictures.length > 0
-      if @chatroom.chatroom_pictures.last.memes.length == @chatroom.chatroom_players.where(status: "ready").length
+      if @chatroom.chatroom_pictures.last.memes.length > 2 && (@chatroom.chatroom_pictures.last.memes.length == @chatroom.chatroom_players.where(status: "ready").length)
         redirect_to "/#{@chatroom.slug}/vote"
         return
       elsif ((@chatroom.players.length > 2) && (@chatroom.chatroom_players.where(status: "ready").length == @chatroom.players.length))
