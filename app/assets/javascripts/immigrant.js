@@ -1,3 +1,9 @@
+$(document).ready(function() {
+  checkChatroomReadyStatus();
+  checkMemeSubmissionStatus();
+  checkVoteSubmissionStatus();
+})
+
 // Action Cable Slaves
 var checkChatroomReadyStatus = function() {
   if ($("#ready-players p").length > 2 && $("#ready-players p").length == $("#joined-players p").length) {
