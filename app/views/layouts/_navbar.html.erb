@@ -23,7 +23,7 @@
             <a href="#page-top"></a>
           </li>
             <% if current_user %>
-              <% if current_user.image %>
+              <% if current_user.bio %>
                 <li><img alt="Profile Picture" src="<%= current_user.image %>" /></li>
               <% end %>
             <% end %>
@@ -31,8 +31,6 @@
           <% if current_user %>
             <% if current_user.username %>
               <li><a href="#"><%= current_user.username %></a></li>
-            <% else %>
-              <li><a href="#"><%= current_user.email %></a></li>
             <% end %>
             <li><%= link_to 'profile',edit_user_registration_path %></li>
             <li><%= link_to "sign out", "/users/sign_out", method: :delete, id: "sign_out" %></li>
