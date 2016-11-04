@@ -17,7 +17,7 @@
   <%if current_user%>
     <% if current_user.username %>
   
-    <div class="row"><p>Enter game code to join or create a game below</p></div>
+    <div class="row"><p>Enter a game code to join or create a game below</p></div>
       <div class="row">
         <%= render partial: 'chatrooms/chatroom_join', locals: {chatroom: @chatroom} %>
       </div>
