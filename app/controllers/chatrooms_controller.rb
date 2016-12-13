@@ -36,7 +36,7 @@ class ChatroomsController < ApplicationController
       offset = rand(Picture.count)
       rando_picrissian = Picture.offset(offset).first
       @chatroom_picture = ChatroomPicture.new(chatroom: @chatroom, picture: rando_picrissian)
-      if @chatroom_picture.save
+      if @chatroom_picture.save!
         respond_to do |format|
           format.html { redirect_to "/#{@chatroom.slug}" }
           format.js { redirect_to "/#{@chatroom.slug}" }
@@ -44,7 +44,7 @@ class ChatroomsController < ApplicationController
       end
     else
       respond_to do |format|
-        flash[:notice] = {error: ["A chatroom with this topic already exists"]}
+        flash[:notice] = {error: ["A game with this topic already exists"]}
         format.html { redirect_to new_chatroom_path }
         format.js { render template: 'chatrooms/chatroom_error.js.erb'} 
       end

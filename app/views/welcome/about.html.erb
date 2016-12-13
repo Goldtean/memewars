@@ -25,9 +25,11 @@
       <div class="row">
         <%= form_for @chatroom do |f| %>
         <%= f.hidden_field :topic, class: "form-control"%>
-        <%= f.submit "Create Game", class: "btn btn-primary", id: "create-game" %>
+        <%= f.submit "Create Private Game", class: "btn btn-primary", id: "create-game" %>
         <% end %>
       </div>
+      <br><br>
+      <div><p>Public Games Coming Soon!</p></div>
     <%else%>
     <div class="row">
       <div class="col-md-8 col-md-offset-2 text-center">
@@ -49,4 +51,3 @@
   <%end%>
   </div>
 </div>
-

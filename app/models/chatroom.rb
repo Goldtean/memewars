@@ -14,7 +14,7 @@ class Chatroom < ApplicationRecord
     source: :user,
     class_name: "User"
 
-  before_validation :slugify
+  before_validation :slugify, :sanitize
   validates :slug, presence: true, uniqueness: true, case_sensitive: false
 
   def to_param
@@ -26,7 +26,12 @@ class Chatroom < ApplicationRecord
     self.slug = rando
   end
 
-  # def sanitize
-  #   self.topic = self.topic.strip
-  # end
+  def sanitize
+    if self.topic.length > 1
+      self.private = false
+    else
+      self.private = true
+    end
+    self.topic = self.topic.strip.downcase.gsub(" ", "-")
+  end
 end
