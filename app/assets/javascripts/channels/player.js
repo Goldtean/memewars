@@ -11,7 +11,8 @@ $(document).ready(function() {
       } else if (data.status == "left") {
         // numberOfJoinedPlayers = numberOfJoinedPlayers - 1;
         $('#'+ data.username).remove();
-        return $('#player-'+ data.username).remove();
+        $('#player-'+ data.username).remove();
+        return false
       } else if (data.status == "ready") {
         // numberOfReadyPlayers++;
         $('#ready-players').append(this.renderReady(data));
@@ -19,6 +20,12 @@ $(document).ready(function() {
       } else if (data.status == "unready") {
         // numberOfReadyPlayers = numberOfReadyPlayers - 1;
         return $('#'+ data.username).remove();
+      } else if (data.status == "addarnold") {
+        // numberOfReadyPlayers++;
+        $('#ready-players').append(this.renderReady(data));
+        // numberOfJoinedPlayers++;
+        $('#joined-players').append(this.renderJoined(data));
+        return checkChatroomReadyStatus();
       };
     },
     renderReady: function(data) {

@@ -1,0 +1,6 @@
+<div class="chatrooms add-arnold-container">
+    <%= form_tag("/#{chatroom.slug}/addarnold", remote: true, authenticity_token: true, method: "post", class: "form-horizontal") do %>
+    <%= hidden_field_tag :arnoldcount, arnold_count %>
+    <%= submit_tag("Add Arnold", class: "btn btn-primary", data: {send: "add-arnold"}) %>
+    <% end %>
+</div>

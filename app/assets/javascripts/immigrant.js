@@ -25,3 +25,6 @@ var checkVoteSubmissionStatus = function() {
     window.location.replace(url);
   }
 }
+
+
+

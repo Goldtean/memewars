@@ -1,0 +1,6 @@
+<div class="chatrooms remove-arnold-container">
+    <%= form_tag("/#{chatroom.slug}/removearnold", remote: true, authenticity_token: true, method: "post", class: "form-horizontal") do %>
+    <%= hidden_field_tag :arnoldcount, arnold_count %>
+    <%= submit_tag("Remove Arnold", class: "btn btn-danger", data: {send: "remove-arnold"}) %>
+    <% end %>
+</div>

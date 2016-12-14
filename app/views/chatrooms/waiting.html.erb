@@ -1,11 +1,11 @@
 
-<div class="row col-xs-12 text-center">
+<div class="row col-xs-12 text-center waiting-and-game-code-container">
   <h4>Waiting</h4>
   <h3>GAME CODE: <strong id="chatroom-slug"><%= @chatroom.slug %></strong></h3>
 </div>
 
-
-<div class="row col-xs-8 col-xs-offset-2">
+<div class='hidden' id='arnold-count'><%= @arnolds.count %></div>
+<div class="row col-xs-8 col-xs-offset-2 ready-and-unready-column-container">
   <div class="panel panel-default col-xs-6">
   <h4>Players</h4>
   <div class="panel-body">
@@ -37,7 +37,7 @@
 </div>
 
 <div class="row col-xs-8 col-xs-offset-2">
-  <div>
+  <section>
     <% if @chatroom_player.status == "ready" %>
       <div id="ready-button" class="hidden">
         <%= render partial: 'chatrooms/ready' %>
@@ -57,8 +57,20 @@
       </div>
         <br>
     <% end %>
+  </section>
+  <section>
     <%= render partial: 'chatrooms/leave', locals: {chatroom_player: @chatroom_player}%>
-  </div>
+  </section>
+  <section>
+    <% if @chatroom_player.creator == true %>
+      <div class="hidden" id="add-arnold-button" >
+        <%= render partial: 'chatrooms/add_arnold', locals: {chatroom: @chatroom, arnold_count: @arnolds.count} %>
+      </div>
+      <div class="hidden" id="remove-arnold-button" >
+        <%= render partial: 'chatrooms/remove_arnold', locals: {chatroom: @chatroom, arnold_count: @arnolds.count} %>
+      </div>
+     <% end %>
+  </section>
 </div>
 
 <div class="row col-xs-8 col-xs-offset-2">

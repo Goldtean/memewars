@@ -11,7 +11,12 @@ $(document).ready(function() {
   readySend();
   unreadySend();
   leaveGame();
+  // Arnold
+  showArnold();
+  addArnold();
+  removeArnold();
 });
+
 // Chatroom Real Time Send / Receive
 // Data via message_chatroom_id channel
 function submitViaEnter() {
@@ -76,4 +81,46 @@ function leaveGame() {
     $('[data-send="leave"]').submit();
     window.location.replace("/");
   });
+}
+
+// Real Time Arnold
+// Check For Arnold On Start
+function showArnold() {
+  var arnoldCount = parseInt($('#arnold-count').text());
+  if(arnoldCount < 2) {
+    $('#add-arnold-button').removeClass('hidden');
+  };
+  if (arnoldCount > 0) {
+    $('#remove-arnold-button').removeClass('hidden');
+  };
+}
+// Add Arnold
+function addArnold() {
+  $('[data-send="add-arnold"]').on('click', function(event) {
+    event.preventDefault();
+    $('[data-send="add-arnold"]').submit();
+    var newCount = parseInt($('#arnold-count').text()) + 1;
+    $('#arnold-count').replaceWith("<div class='hidden' id='arnold-count'>" + newCount+ "</div>");
+    $('#arnoldcount').val(newCount);
+    $('#remove-arnold-button').removeClass('hidden');
+    if(parseInt($('#arnold-count').text()) > 1) {
+      $('#add-arnold-button').addClass('hidden');
+    }
+    return false;
+  })
+}
+// Remove Arnold
+function removeArnold() {
+  $('[data-send="remove-arnold"]').on('click', function(event) {
+    event.preventDefault();
+    $('[data-send="remove-arnold"]').submit();
+    var newCount = parseInt($('#arnold-count').text()) - 1;
+    $('#arnold-count').replaceWith("<div class='hidden' id='arnold-count'>" + newCount+ "</div>");
+    $('#arnoldcount').val(newCount);
+    $('#add-arnold-button').removeClass('hidden');
+    if(parseInt($('#arnold-count').text()) < 1) {
+      $('#remove-arnold-button').addClass('hidden');
+    }
+    return false;
+  })
 }

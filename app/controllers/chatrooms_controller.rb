@@ -58,15 +58,6 @@ class ChatroomsController < ApplicationController
   end
 
   def waiting
-    
-    # if @chatroom_picture = ChatroomPicture.where(chatroom: @chatroom).last
-    #   if @chatroom_picture.winner == true
-    #     offset = rand(Picture.count)
-    #     rando_picrissian = Picture.offset(offset).first
-    #     @new_chatroom_picture = ChatroomPicture.new(chatroom: @chatroom, picture: rando_picrissian)
-    #     @new_chatroom_picture.save!
-    #   end
-    # end
 
     @chatroom = Chatroom.find_by(slug: params[:slug])
     @message = Message.new
@@ -104,6 +95,18 @@ class ChatroomsController < ApplicationController
       rando_picrissian = Picture.offset(offset).first
       @new_chatroom_picture = ChatroomPicture.new(chatroom: @chatroom, picture: rando_picrissian)
       @new_chatroom_picture.save!
+    end
+    # Arnold
+    if @chatroom_player.creator == true
+      @arnolds = []
+      @arnold = ChatroomPlayer.where(playername: "Arnold", chatroom: @chatroom).first
+      @schwarzenegger = ChatroomPlayer.where(playername: "Schwarzenegger", chatroom: @chatroom).first
+      if @arnold
+        @arnolds << @arnold
+      end
+      if @schwarzenegger
+        @arnolds << @schwarzenegger
+      end
     end
   end
 

@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get ':slug/vote', to: "chatrooms#vote"
   get ':slug/winner', to: "chatrooms#winner"
   get ':slug', to: 'chatrooms#show'
+  post ':slug/addarnold', to: 'chatroom_players#addarnold'
+  post ':slug/removearnold', to: 'chatroom_players#removearnold'
   post 'chatrooms/join', to: 'chatrooms#join'
 
   

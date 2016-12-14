@@ -45,5 +45,5 @@
 # Picture.create(category: "Third World Success Kid", url: "33.jpg")
 # Picture.create(category: "Got any more of that rock", url: "34.jpg")
 
-User.create(email: "arnold@arnold.schwarzenegger", username: "Arnold", password: "arnold12")
-User.create(email: "schwarzenegger@schwarzenegger.arnold", username: "Schwarzenegger", password: "arnold12")
+User.create(email: "arnold@arnold.schwarzenegger", username: "Arnold", password: "#{ENV['ARNOLD_PW']}")
+User.create(email: "schwarzenegger@schwarzenegger.arnold", username: "Schwarzenegger", password: "#{ENV['SCHWARZENEGGER_PW']}")
