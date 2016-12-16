@@ -155,6 +155,32 @@ class ChatroomsController < ApplicationController
        @chatroom_player_meme = "doesn't exist"
     end
     @ready_player_count = ChatroomPlayer.where(chatroom_id: @chatroom.id, status: "ready").length
+    # Detect Arnold
+    if @chatroom_player.creator == true
+      @arnolds = []
+      @arnold = ChatroomPlayer.where(playername: "Arnold", chatroom: @chatroom).first
+      @schwarzenegger = ChatroomPlayer.where(playername: "Schwarzenegger", chatroom: @chatroom).first
+      if @arnold
+        @arnolds << @arnold
+      end
+      if @schwarzenegger
+        @arnolds << @schwarzenegger
+      end
+      # Meme Arnold
+      @arnolds.each do |arndawg|
+        if Meme.where(chatroom_player_id: arndawg.id, chatroom_picture_id: @chatroom_picture.id).length < 1
+          meme = Meme.new
+          meme.caption = Arnold.quote
+          meme.chatroom_player_id = arndawg.id
+          meme.chatroom_picture_id = @chatroom_picture.id
+          if meme.save!
+            ActionCable.server.broadcast "memes_#{@chatroom.slug}",
+              meme_status: "Meme"
+          end
+        end
+      end
+    end
+    
 
   end
 
@@ -168,6 +194,44 @@ class ChatroomsController < ApplicationController
     @memes = @chatroom_picture.memes
     @own_meme = @chatroom_picture.memes.where(chatroom_player_id: @chatroom_player.id).last
     @memes = @memes - [@own_meme]
+
+        # Detect Arnold
+    if @chatroom_player.creator == true
+      @arnolds = []
+      @arnold = ChatroomPlayer.where(playername: "Arnold", chatroom: @chatroom).first
+      @schwarzenegger = ChatroomPlayer.where(playername: "Schwarzenegger", chatroom: @chatroom).first
+      if @arnold
+        @arnolds << @arnold
+      end
+      if @schwarzenegger
+        @arnolds << @schwarzenegger
+      end
+      # Meme Arnold
+      if @arnolds.length > 0
+
+        @arnolds.each do |arndawg|
+          vote_count = 0
+          @memes.each do |meme|
+            if Vote.where(meme_id: meme.id, chatroom_player_id: arndawg.id).length > 0
+              vote_count += 1
+              puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" + vote_count + "PLAYERNAME:" + arndawg.playername + "$$$$$$$$$$$$$$" + "VOTING FOR:" + meme.caption
+            end
+          end
+          if vote_count < 1
+            vote = Vote.new
+            vote.chatroom_player_id = arndawg.id
+            eligible_votes = @chatroom_picture.memes.where.not(chatroom_player_id: arndawg.id)
+            ev_rand = rand(eligible_votes.count)
+            vote.meme_id = eligible_votes[ev_rand].id
+            if vote.save!
+              ActionCable.server.broadcast "memes_#{@chatroom.slug}",
+                meme_status: "Vote"
+            end
+          end
+        end
+
+      end
+    end
     @vote_count = 0
     @chatroom_picture.memes.each do |meme|
       @vote_count += meme.voters.length

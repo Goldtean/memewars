@@ -16,9 +16,11 @@ ActiveRecord::Schema.define(version: 20164614172213) do
   enable_extension "plpgsql"
 
   create_table "chatroom_pictures", force: :cascade do |t|
-    t.integer "picture_id",  null: false
-    t.integer "chatroom_id", null: false
-    t.boolean "winner"
+    t.integer  "picture_id",  null: false
+    t.integer  "chatroom_id", null: false
+    t.boolean  "winner"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["chatroom_id"], name: "index_chatroom_pictures_on_chatroom_id", using: :btree
     t.index ["picture_id"], name: "index_chatroom_pictures_on_picture_id", using: :btree
   end
@@ -94,6 +96,7 @@ ActiveRecord::Schema.define(version: 20164614172213) do
     t.string   "username"
     t.string   "bio"
     t.integer  "wins"
+    t.string   "image_url"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
